@@ -10,12 +10,11 @@ describe VCR, 'deprecations', :disable_warnings do
     it 'yields the configuration object' do
       config_object = nil
       VCR.config { |c| config_object = c }
-      config_object.should be(VCR.configuration)
+      expect(config_object).to be(VCR.configuration)
     end
 
     it 'prints a deprecation warning' do
-      VCR.should_receive(:warn).with \
-        "WARNING: `VCR.config` is deprecated.  Use VCR.configure instead."
+      VCR.should_receive(:warn).with(/VCR.config.*deprecated/i)
 
       VCR.config { }
     end
@@ -23,12 +22,11 @@ describe VCR, 'deprecations', :disable_warnings do
 
   describe "Config" do
     it 'returns the same object referenced by VCR.configuration' do
-      VCR::Config.should be(VCR.configuration)
+      expect(VCR::Config).to be(VCR.configuration)
     end
 
     it 'prints a deprecation warning' do
-      VCR.should_receive(:warn).with \
-        "WARNING: `VCR::Config` is deprecated.  Use VCR.configuration instead."
+      VCR.should_receive(:warn).with(/VCR::Config.*deprecated/i)
 
       VCR::Config
     end
@@ -42,12 +40,11 @@ describe VCR, 'deprecations', :disable_warnings do
 
   describe "Cassette::MissingERBVariableError" do
     it 'returns VCR::Errors::MissingERBVariableError' do
-      VCR::Cassette::MissingERBVariableError.should be(VCR::Errors::MissingERBVariableError)
+      expect(VCR::Cassette::MissingERBVariableError).to be(VCR::Errors::MissingERBVariableError)
     end
 
     it 'prints a deprecation warning' do
-      VCR::Cassette.should_receive(:warn).with \
-        "WARNING: `VCR::Cassette::MissingERBVariableError` is deprecated.  Use `VCR::Errors::MissingERBVariableError` instead."
+      VCR::Cassette.should_receive(:warn).with(/VCR::Cassette::MissingERBVariableError.*deprecated/i)
 
       VCR::Cassette::MissingERBVariableError
     end
@@ -66,9 +63,7 @@ describe VCR, 'deprecations', :disable_warnings do
     end
 
     it 'prints a deprecation warning' do
-      VCR.configuration.should_receive(:warn).with \
-        "WARNING: `VCR.config { |c| c.stub_with ... }` is deprecated. Use `VCR.configure { |c| c.hook_into ... }` instead."
-
+      VCR.configuration.should_receive(:warn).with(/stub_with.*deprecated/i)
       VCR.configure { |c| c.stub_with :fakeweb, :excon }
     end
   end
@@ -77,6 +72,13 @@ describe VCR, 'deprecations', :disable_warnings do
     it 'prints a deprecation warning when passed a block' do
       Kernel.should_receive(:warn).with(/Passing a block .* is deprecated/)
       VCR::Middleware::Faraday.new(stub) { }
+    end
+  end
+
+  describe "VCR::RSpec::Macros" do
+    it 'prints a deprecation warning' do
+      Kernel.should_receive(:warn).with(/VCR::RSpec::Macros is deprecated/)
+      Class.new.extend(VCR::RSpec::Macros)
     end
   end
 end

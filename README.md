@@ -2,7 +2,7 @@
 
 Record your test suite's HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests.
 
-[![Build Status](https://secure.travis-ci.org/myronmarston/vcr.png?branch=master)](http://travis-ci.org/myronmarston/vcr)
+[![Build Status](https://secure.travis-ci.org/vcr/vcr.png?branch=master)](http://travis-ci.org/vcr/vcr)
 
 ## Synopsis
 
@@ -36,11 +36,11 @@ maintenance) and accurate (the response will contain the same headers and body y
 * Automatically records and replays your HTTP interactions with minimal setup/configuration code.
 * Supports and works with the HTTP stubbing facilities of multiple libraries.  Currently, the
   following are supported:
-  * [FakeWeb](https://github.com/chrisk/fakeweb)
   * [WebMock](https://github.com/bblimke/webmock)
   * [Typhoeus](https://github.com/typhoeus/typhoeus)
   * [Faraday](https://github.com/technoweenie/faraday)
   * [Excon](https://github.com/geemus/excon)
+  * [FakeWeb](https://github.com/chrisk/fakeweb) (deprecated)
 * Supports multiple HTTP libraries:
   * [Patron](http://github.com/toland/patron) (when using WebMock)
   * [Curb](http://github.com/taf2/curb) (when using WebMock -- only supports Curl::Easy at the moment)
@@ -71,7 +71,7 @@ maintenance) and accurate (the response will contain the same headers and body y
 
 The docs come in two flavors:
 
-* The [relish docs](http://relishapp.com/myronmarston/vcr) contain
+* The [relish docs](https://relishapp.com/vcr/vcr/docs) contain
   example-based documentation (VCR's cucumber suite, in fact). It's a
   good place to look when you are first getting started with VCR, or if
   you want to see an example of how to use a feature.
@@ -79,7 +79,7 @@ The docs come in two flavors:
   API documentation. The API docs contain detailed info about all of VCR's
   public API.
 
-See the [Upgrade](https://github.com/myronmarston/vcr/blob/master/Upgrade.md) doc
+See the [Upgrade](https://github.com/vcr/vcr/blob/master/Upgrade.md) doc
 for info about what's new and changed in VCR 2.0.
 
 ## Release Policy
@@ -105,13 +105,13 @@ Note that as of VCR 2, 1.8.6 and 1.9.1 are not supported.
 
 ## Development
 
-* Source hosted on [GitHub](http://github.com/myronmarston/vcr).
+* Source hosted on [GitHub](http://github.com/vcr/vcr).
 * Direct questions and discussions to the [IRC channel](irc://irc.freenode.net/vcr) or
   the [mailing list](http://groups.google.com/group/vcr-ruby).
-* Report issues on [GitHub Issues](http://github.com/myronmarston/vcr/issues).
+* Report issues on [GitHub Issues](http://github.com/vcr/vcr/issues).
 * Pull requests are very welcome! Please include spec and/or feature coverage for every patch,
   and create a topic branch for every separate change you make.
-* See the [Contributing](https://github.com/myronmarston/vcr/blob/master/CONTRIBUTING.md)
+* See the [Contributing](https://github.com/vcr/vcr/blob/master/CONTRIBUTING.md)
   guide for instructions on running the specs and features.
 * Code quality metrics are checked by [Code Climate](https://codeclimate.com/github/myronmarston/vcr).
 * Documentation is generated with [YARD](http://yardoc.org/) ([cheat sheet](http://cheat.errtheblog.com/s/yard/)).
@@ -138,6 +138,8 @@ yard server --reload
 Thanks also to the following people who have contributed patches or helpful suggestions:
 
 * [Aaron Brethorst](http://github.com/aaronbrethorst)
+* [Alexander Wenzowski](https://github.com/wenzowski)
+* [Austen Ito](https://github.com/austenito)
 * [Avdi Grimm](https://github.com/avdi)
 * [Bartosz Blimke](http://github.com/bblimke)
 * [Benjamin Oakes](https://github.com/benjaminoakes)
@@ -153,12 +155,15 @@ Thanks also to the following people who have contributed patches or helpful sugg
 * [Hans Hasselberg](https://github.com/i0rek)
 * [Ingemar](https://github.com/ingemar)
 * [Jacob Green](https://github.com/Jacobkg)
+* [Jay Shepherd](https://github.com/jayshepherd)
 * [Jeff Pollard](https://github.com/Fluxx)
 * [Joe Nelson](https://github.com/begriffs)
 * [Jonathan Tron](https://github.com/JonathanTron)
 * [Justin Smestad](https://github.com/jsmestad)
 * [Karl Baum](https://github.com/kbaum)
+* [Luke van der Hoeven](https://github.com/plukevdh)
 * [Mark Burns](https://github.com/markburns)
+* [Max Riveiro](https://github.com/kavu)
 * [Michael Lavrisha](https://github.com/vrish88)
 * [Mislav Marohnić](https://github.com/mislav)
 * [Nathaniel Bibler](https://github.com/nbibler)
@@ -168,7 +173,11 @@ Thanks also to the following people who have contributed patches or helpful sugg
 * [playupchris](https://github.com/playupchris)
 * [Ryan Bates](https://github.com/ryanb)
 * [Ryan Burrows](https://github.com/rhburrows)
+* [Ryan Castillo](https://github.com/rmcastil)
 * [Sathya Sekaran](https://github.com/sfsekaran)
+* [Scott Carleton](https://github.com/ScotterC)
+* [Shay Frendt](https://github.com/shayfrendt)
+* [Steve Faulkner](https://github.com/southpolesteve)
 * [Steven Anderson](https://github.com/bendycode)
 * [Tyler Hunt](https://github.com/tylerhunt)
 * [Wesley Beary](https://github.com/geemus)
@@ -178,10 +187,12 @@ Thanks also to the following people who have contributed patches or helpful sugg
 * [Betamax](https://github.com/robfletcher/betamax) (Groovy)
 * [Mimic](https://github.com/acoulton/mimic) (PHP/Kohana)
 * [Nock](https://github.com/flatiron/nock) (JavaScript/Node)
-* [NSURLConnectionVCR](https://bitbucket.org/martijnthe/nsurlconnectionvcr) (Objective C)
+* [node-replay](https://github.com/assaf/node-replay) (JavaScript/Node)
+* [NSURLConnectionVCR](https://bitbucket.org/martijnthe/nsurlconnectionvcr) (Objective-C)
 * [TapeDeck.js](https://github.com/EndangeredMassa/TapeDeck.js) (JavaScript)
 * [VCR.js](https://github.com/elcuervo/vcr.js) (JavaScript)
 * [VCR.py](https://github.com/kevin1024/vcrpy) (Python)
+* [VCRURLConnection](https://github.com/dstnbrkr/VCRURLConnection) (Objective-C)
 * [vcr-clj](https://github.com/ifesdjeen/vcr-clj) (Clojure)
 
 ## Similar Libraries in Ruby
@@ -195,5 +206,5 @@ Thanks also to the following people who have contributed patches or helpful sugg
 
 ## Copyright
 
-Copyright (c) 2010-2012 Myron Marston. Released under the terms of the
+Copyright (c) 2010-2013 Myron Marston. Released under the terms of the
 MIT license. See LICENSE for details.

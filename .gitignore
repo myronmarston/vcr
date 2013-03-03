@@ -43,3 +43,8 @@ doc
 
 ## PROJECT::EDITORS
 .idea/
+
+.rbenv-version
+bin/*
+bundle/*
+.rspec-local

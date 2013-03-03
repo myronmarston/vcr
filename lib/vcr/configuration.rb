@@ -1,5 +1,6 @@
 require 'vcr/util/hooks'
 require 'uri'
+require 'cgi'
 
 module VCR
   # Stores the VCR configuration.
@@ -123,6 +124,24 @@ module VCR
     def allow_http_connections_when_no_cassette?
       !!@allow_http_connections_when_no_cassette
     end
+
+    # Sets a parser for VCR to use when parsing query strings for request
+    # comparisons.  The new parser must implement a method `call` that returns
+    # an object which is both equalivant and consistent when given an HTTP
+    # query string of possibly differing value ordering.
+    #
+    # * `#==    # => Boolean`
+    #
+    # The `#==` method must return true if both objects represent the
+    # same query string.
+    #
+    # This defaults to `CGI.parse` from the ruby standard library.
+    #
+    # @overload query_parser
+    #  @return [#call] the current query string parser object
+    # @overload query_parser=
+    #  @param value [#call] sets the query_parser
+    attr_accessor :query_parser
 
     # Sets a parser for VCR to use when parsing URIs. The new parser
     # must implement a method `parse` that returns an instance of the
@@ -373,13 +392,16 @@ module VCR
         "VCR::Configuration#around_http_request requires fibers, " +
         "which are not available on your ruby intepreter."
     else
-      fiber, hook_allowed, hook_decaration = nil, false, caller.first
+      fibers = {}
+      hook_allowed, hook_decaration = false, caller.first
       before_http_request(*filters) do |request|
         hook_allowed = true
         fiber = start_new_fiber_for(request, block)
+        fibers[Thread.current] = fiber
       end
 
       after_http_request(lambda { hook_allowed }) do |request, response|
+        fiber = fibers.delete(Thread.current)
         resume_fiber(fiber, response, hook_decaration)
       end
     end
@@ -387,7 +409,10 @@ module VCR
     # Configures RSpec to use a VCR cassette for any example
     # tagged with `:vcr`.
     def configure_rspec_metadata!
-      VCR::RSpec::Metadata.configure!
+      unless @rspec_metadata_configured
+        VCR::RSpec::Metadata.configure!
+        @rspec_metadata_configured = true
+      end
     end
 
     # An object to log debug output to.
@@ -443,6 +468,7 @@ module VCR
 
     def initialize
       @allow_http_connections_when_no_cassette = nil
+      @rspec_metadata_configured = false
       @default_cassette_options = {
         :record            => :once,
         :match_requests_on => RequestMatcherRegistry::DEFAULT_MATCHERS,
@@ -452,6 +478,7 @@ module VCR
       }
 
       self.uri_parser = URI
+      self.query_parser = CGI.method(:parse)
       self.debug_logger = NullDebugLogger
 
       register_built_in_hooks

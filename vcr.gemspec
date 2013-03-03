@@ -3,7 +3,8 @@ require "vcr/version"
 
 Gem::Specification.new do |s|
   s.name = "vcr"
-  s.homepage = "http://github.com/myronmarston/vcr"
+  s.homepage = "http://github.com/vcr/vcr"
+  s.license = "MIT"
   s.authors = ["Myron Marston"]
   s.summary = "Record your test suite's HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests."
   s.description = "VCR provides a simple API to record and replay your test suite's HTTP interactions.  It works with a variety of HTTP client libraries, HTTP stubbing libraries and testing frameworks."
@@ -40,12 +41,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'json', '~> 1.6.5'
   s.add_development_dependency 'simplecov', '~> 0.5.3'
   s.add_development_dependency 'redis', '~> 2.2.2'
+  s.add_development_dependency 'typhoeus', '~> 0.5.3'
 
   unless RUBY_PLATFORM == 'java'
     s.add_development_dependency 'patron', '~> 0.4.15'
     s.add_development_dependency 'em-http-request', '~> 1.0.2'
     s.add_development_dependency 'curb', '~> 0.8.0'
-    s.add_development_dependency 'typhoeus', '~> 0.5.3'
     s.add_development_dependency 'yajl-ruby', '~> 1.1.0'
   end
 end

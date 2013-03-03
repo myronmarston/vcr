@@ -1,11 +1,16 @@
 require 'rubygems'
 
+using_git = File.exist?(File.expand_path('../../.git/', __FILE__))
+require 'bundler/setup' if using_git
+
 if RUBY_VERSION =~ /1.9/ && RUBY_ENGINE == 'ruby'
   require 'simplecov'
 
   SimpleCov.start do
     add_filter "/spec"
     add_filter "/features"
+    add_filter "/bin"
+    add_filter "/bundle"
 
     # internet_connection mostly contains logic copied from the ruby 1.8.7
     # stdlib for which I haven't written tests.
@@ -18,12 +23,6 @@ if RUBY_VERSION =~ /1.9/ && RUBY_ENGINE == 'ruby'
     end
     SimpleCov.result.format!
   end
-end
-
-using_git = File.exist?(File.expand_path('../../.git/', __FILE__))
-if using_git
-  require 'bundler'
-  Bundler.setup
 end
 
 require 'rspec'
@@ -55,8 +54,11 @@ end
 RSpec.configure do |config|
   config.order = :rand
   config.color_enabled = true
-  config.debug = (using_git && RUBY_INTERPRETER == :mri && !%w[ 1.9.3 ].include?(RUBY_VERSION) && !ENV['CI'])
   config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  config.expect_with :rspec do |expectations|
+    expectations.syntax = :expect
+  end
 
   tmp_dir = File.expand_path('../../tmp/cassette_library_dir', __FILE__)
   config.before(:each) do
