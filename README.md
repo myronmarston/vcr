@@ -106,7 +106,7 @@ Note that as of VCR 2, 1.8.6 and 1.9.1 are not supported.
 ## Development
 
 * Source hosted on [GitHub](http://github.com/myronmarston/vcr).
-* Direct questions and discussions to the [IRC channel](irc://irc.freenode.net/vcr) or
+* Direct questions and discussions to the [IRC channel](irc://irc.freenode.net/vcr) (irc.freenode.net #vcr) or
   the [mailing list](http://groups.google.com/group/vcr-ruby).
 * Report issues on [GitHub Issues](http://github.com/myronmarston/vcr/issues).
 * Pull requests are very welcome! Please include spec and/or feature coverage for every patch,
